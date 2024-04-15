@@ -3,8 +3,11 @@ package org.xq.provider;
 import org.xq.common.service.UserService;
 import org.xq.xqrpc.RpcApplication;
 import org.xq.xqrpc.registry.LocalRegistry;
+import org.xq.xqrpc.serializer.Serializer;
 import org.xq.xqrpc.server.HttpServer;
 import org.xq.xqrpc.server.VertxHttpServer;
+
+import java.util.ServiceLoader;
 
 /**
  * 服务提供者示意
@@ -20,5 +23,6 @@ public class ProviderExample {
         // 启动web服务
         HttpServer httpServer = new VertxHttpServer();
         httpServer.doStart(RpcApplication.getConfig().getServerPort());
+
     }
 }

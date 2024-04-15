@@ -16,7 +16,6 @@
       </plugin>
     </plugins>
   </build>
-  <name>Archetype - xq-rpc-core</name>
 
   <dependencies>
   <!--日志库-->
@@ -60,6 +59,61 @@
       <version>2.2</version>
     </dependency>
 
+    <!--jackson-->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>2.15.4</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>2.11.2</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.11.2</version>
+    </dependency>
+    <dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-annotations</artifactId>
+    <version>2.11.2</version>
+    </dependency>
+    <!--序列化工具-->
+    <!--hessian-->
+    <dependency>
+      <groupId>com.caucho</groupId>
+      <artifactId>hessian</artifactId>
+      <version>4.0.66</version>
+    </dependency>
+
+    <!--kryo-->
+    <dependency>
+      <groupId>com.esotericsoftware</groupId>
+      <artifactId>kryo</artifactId>
+      <version>5.6.0</version>
+    </dependency>
+
+
+    <!-- protostuff -->
+    <dependency>
+      <groupId>io.protostuff</groupId>
+      <artifactId>protostuff-core</artifactId>
+      <version>1.8.0</version>
+    </dependency>
+    <dependency>
+      <groupId>io.protostuff</groupId>
+      <artifactId>protostuff-runtime</artifactId>
+      <version>1.8.0</version>
+    </dependency>
+
+    <!--fastjson-->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>2.0.31</version>
+    </dependency>
 
     <!--测试库-->
     <dependency>
@@ -68,6 +122,7 @@
       <version>4.13.2</version>
       <scope>test</scope>
     </dependency>
+
 
 
   </dependencies>

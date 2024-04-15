@@ -4,11 +4,14 @@ import io.vertx.core.Handler;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
+import org.xq.xqrpc.RpcApplication;
 import org.xq.xqrpc.model.RpcRequest;
 import org.xq.xqrpc.model.RpcResponse;
 import org.xq.xqrpc.registry.LocalRegistry;
-import org.xq.xqrpc.serializer.JdkSerializer;
+import org.xq.xqrpc.serializer.FastJsonSerializer.FastJsonSerializer;
+import org.xq.xqrpc.serializer.JdkSerializer.JdkSerializer;
 import org.xq.xqrpc.serializer.Serializer;
+import org.xq.xqrpc.serializer.SerializerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -26,7 +29,8 @@ public class HttpServerHandler implements Handler<HttpServerRequest> {
     @Override
     public void handle(HttpServerRequest httpServerRequest) {
         // 指定序列化器
-        final Serializer serializer = new JdkSerializer();
+//        final Serializer serializer = SerializerFactory.getInstance(RpcApplication.getConfig().getSerializer());
+        final Serializer serializer = new FastJsonSerializer();
         System.out.println("Received request: " + httpServerRequest.method() + " " + httpServerRequest.uri());
 
         // 异步处理http请求

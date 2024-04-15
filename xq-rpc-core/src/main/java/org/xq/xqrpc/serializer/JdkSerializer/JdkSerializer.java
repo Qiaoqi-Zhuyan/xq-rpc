@@ -1,11 +1,13 @@
-package org.xq.xqrpc.serializer;
+package org.xq.xqrpc.serializer.JdkSerializer;
+
+import org.xq.xqrpc.serializer.Serializer;
 
 import java.io.*;
 
 /**
  * JDK 序列化器
  */
-public class JdkSerializer implements Serializer{
+public class JdkSerializer implements Serializer {
 
     /**
      * 序列化

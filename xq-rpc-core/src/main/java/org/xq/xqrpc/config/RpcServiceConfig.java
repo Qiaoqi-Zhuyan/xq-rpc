@@ -1,6 +1,7 @@
 package org.xq.xqrpc.config;
 
 import lombok.Data;
+import org.xq.xqrpc.serializer.SerializerKeys;
 
 /**
  * 全局配置
@@ -33,6 +34,9 @@ public class RpcServiceConfig {
      */
     private boolean mock = false;
 
-
+    /**
+     * 序列化器
+     */
+    private String serializer = SerializerKeys.FastJson;
 
 }

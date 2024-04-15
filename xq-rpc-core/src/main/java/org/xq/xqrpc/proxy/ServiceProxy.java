@@ -2,14 +2,18 @@ package org.xq.xqrpc.proxy;
 
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
+import org.xq.xqrpc.RpcApplication;
 import org.xq.xqrpc.model.RpcRequest;
 import org.xq.xqrpc.model.RpcResponse;
+import org.xq.xqrpc.serializer.FastJsonSerializer.FastJsonSerializer;
 import org.xq.xqrpc.serializer.Serializer;
-import org.xq.xqrpc.serializer.JdkSerializer;
+import org.xq.xqrpc.serializer.JdkSerializer.JdkSerializer;
+import org.xq.xqrpc.serializer.SerializerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.ServiceLoader;
 
 /**
  * 服务代理 jdk 动态代理
@@ -24,9 +28,8 @@ public class ServiceProxy implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         // 指定序列化器
-        Serializer serializer = new JdkSerializer();
-
-        // 构造请求
+//        final Serializer serializer = SerializerFactory.getInstance(RpcApplication.getConfig().getSerializer());
+        final Serializer serializer = new FastJsonSerializer();
         RpcRequest rpcRequest = RpcRequest.builder()
                 .serviceName(method.getDeclaringClass().getName())
                 .methodName(method.getName())

@@ -5,6 +5,9 @@ import org.xq.xqrpc.config.RpcServiceConfig;
 import org.xq.xqrpc.constant.RpcConstant;
 import org.xq.xqrpc.utils.ConfigUtils;
 
+/**
+ * rpc服务入口
+ */
 @Slf4j
 public class RpcApplication {
 
@@ -25,7 +28,6 @@ public class RpcApplication {
         RpcServiceConfig serviceConfig;
         try{
             serviceConfig = ConfigUtils.loadConfig(RpcConstant.YAML_CONFIG_FILE, RpcServiceConfig.class, RpcConstant.DEFAULT_CONFIG_PREFIX);
-            System.out.println("初始化");
         }catch (Exception e){
             // 使用默认值
             e.printStackTrace();
