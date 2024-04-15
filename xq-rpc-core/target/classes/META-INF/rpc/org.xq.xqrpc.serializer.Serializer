@@ -1,2 +1,0 @@
-json=org.xq.xqrpc.serializer.JsonSerializer.JsonSerializer
-fastjson=org.xq.xqrpc.serializer.FastJsonSerializer.FastJsonSerializer
