@@ -4,9 +4,11 @@
 ![dubbo](doc/dubboframework.png "设计思路")
 # TODO
 1. 全局加载器
-- 支持.properties, yaml和yml格式格式的全局加载器
+- 支持properties, yaml和yml格式格式的全局加载器
 - 监听热加载
 2. Mock接口
+ - MockServiceProxy 模拟代理
+ - python的faker库生成测试数据
 3. 动态序列化器
 4. SPI 加载
 5. 注册中心
