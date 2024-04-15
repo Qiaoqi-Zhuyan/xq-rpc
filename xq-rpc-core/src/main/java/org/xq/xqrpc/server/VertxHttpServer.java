@@ -4,7 +4,6 @@ import io.vertx.core.Vertx;
 
 public class VertxHttpServer implements HttpServer{
 
-
     /**
      * 启动服务
      * @param port

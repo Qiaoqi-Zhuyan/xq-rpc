@@ -11,8 +11,12 @@
  - MockServiceProxy 模拟对象代理
  - python的faker库生成测试数据 
 ### SPI动态加载动态序列化器
- - 使用SPI机制动态加载序列化器
- - 支持Json序列化器,
+ - 支持使用SPI机制动态加载序列化器 
+   - 在`resources/META-INF/rpc`自定义定义SPI的api接口
+ - 支持多种序列化器
+   - Json
+   - FastJson
+   - 
 ### 注册中心
 ### 自定义Rpc协议
 ### 负载均衡
@@ -26,4 +30,5 @@
 ### 支持服务分组
 ### 超时处理
 
-# ref
+# 处理日志
+[处理记录](doc/debug_log.md)

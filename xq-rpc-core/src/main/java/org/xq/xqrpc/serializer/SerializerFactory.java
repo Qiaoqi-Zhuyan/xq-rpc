@@ -2,6 +2,7 @@ package org.xq.xqrpc.serializer;
 
 import org.xq.xqrpc.serializer.FastJsonSerializer.FastJsonSerializer;
 import org.xq.xqrpc.serializer.JsonSerializer.JsonSerializer;
+import org.xq.xqrpc.spi.SpiLoader;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,20 +14,24 @@ import java.util.Map;
  */
 public class SerializerFactory {
 
-    /**
-     * 序列化器映射
-     */
-    private static final Map<String, Serializer> KEY_SERIALIZER_MAP = new HashMap<String, Serializer>(){
-        {
-            put(SerializerKeys.JSON, new JsonSerializer());
-            put(SerializerKeys.FastJson, new FastJsonSerializer());
-        }
-    };
+//    /**
+//     * 序列化器映射
+//     */
+//    private static final Map<String, Serializer> KEY_SERIALIZER_MAP = new HashMap<String, Serializer>(){
+//        {
+//            put(SerializerKeys.JSON, new JsonSerializer());
+//            put(SerializerKeys.FastJson, new FastJsonSerializer());
+//        }
+//    };
+
+    static{
+        SpiLoader.load(Serializer.class);
+    }
 
     /**
      * 默认序列化器
      */
-    private static final Serializer DEFAULT_SERIALIZER = KEY_SERIALIZER_MAP.get(SerializerKeys.FastJson);
+    private static final Serializer DEFAULT_SERIALIZER = new FastJsonSerializer();
 
     /**
      * 获取实例
@@ -34,6 +39,6 @@ public class SerializerFactory {
      * @return
      */
     public static Serializer getInstance(String key){
-        return KEY_SERIALIZER_MAP.getOrDefault(key, DEFAULT_SERIALIZER);
+        return SpiLoader.getInstance(Serializer.class, key);
     }
 }

@@ -29,8 +29,7 @@ public class HttpServerHandler implements Handler<HttpServerRequest> {
     @Override
     public void handle(HttpServerRequest httpServerRequest) {
         // 指定序列化器
-//        final Serializer serializer = SerializerFactory.getInstance(RpcApplication.getConfig().getSerializer());
-        final Serializer serializer = new FastJsonSerializer();
+        final Serializer serializer = SerializerFactory.getInstance(RpcApplication.getConfig().getSerializer());
         System.out.println("Received request: " + httpServerRequest.method() + " " + httpServerRequest.uri());
 
         // 异步处理http请求
