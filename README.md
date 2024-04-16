@@ -13,6 +13,7 @@
 ### SPI动态加载动态序列化器
  - 支持使用SPI机制动态加载序列化器 
    - 在`resources/META-INF/rpc`自定义定义SPI的api接口
+   - SpiLoader 使用双检锁模式, SerializerFactory 使用静态内部类模式实现懒加载
  - 支持多种序列化器
    - Json
    - FastJson

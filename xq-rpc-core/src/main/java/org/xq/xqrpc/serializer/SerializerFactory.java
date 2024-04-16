@@ -3,6 +3,7 @@ package org.xq.xqrpc.serializer;
 import org.xq.xqrpc.serializer.FastJsonSerializer.FastJsonSerializer;
 import org.xq.xqrpc.serializer.JsonSerializer.JsonSerializer;
 import org.xq.xqrpc.spi.SpiLoader;
+import sun.security.provider.ConfigFile;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,18 +15,14 @@ import java.util.Map;
  */
 public class SerializerFactory {
 
-//    /**
-//     * 序列化器映射
-//     */
-//    private static final Map<String, Serializer> KEY_SERIALIZER_MAP = new HashMap<String, Serializer>(){
-//        {
-//            put(SerializerKeys.JSON, new JsonSerializer());
-//            put(SerializerKeys.FastJson, new FastJsonSerializer());
-//        }
-//    };
-
-    static{
-        SpiLoader.load(Serializer.class);
+    /**
+     * 静态内部类加载序列化器实现实例
+     */
+    private static class FactorySingleton{
+        private static Serializer loadSerializer(String key){
+            SpiLoader.load(Serializer.class);
+            return SpiLoader.getInstance(Serializer.class, key);
+        }
     }
 
     /**
@@ -39,6 +36,6 @@ public class SerializerFactory {
      * @return
      */
     public static Serializer getInstance(String key){
-        return SpiLoader.getInstance(Serializer.class, key);
+        return FactorySingleton.loadSerializer(key);
     }
 }

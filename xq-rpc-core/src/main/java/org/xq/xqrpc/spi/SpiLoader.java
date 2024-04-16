@@ -1,6 +1,7 @@
 package org.xq.xqrpc.spi;
 
 import cn.hutool.core.io.resource.ResourceUtil;
+import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import org.xq.xqrpc.serializer.Serializer;
 
@@ -26,13 +27,15 @@ public class SpiLoader {
      * 存储已加载的类: 接口名 -> (key -> 实现类)
      * concurrentHashMap线程安全
      */
-    private static final Map<String, Map<String, Class<?>>> loaderMap = new ConcurrentHashMap<>();
+    private static volatile Map<String, Map<String, Class<?>>> loaderMap = new ConcurrentHashMap<>();
 
     /**
      * 对象实例缓存 类路径 -> 对象实例
      * 单例模式
      */
-    private static final Map<String, Object> instanceCache = new ConcurrentHashMap<>();
+    private static volatile Map<String, Object> instanceCache = new ConcurrentHashMap<>();
+
+    private static volatile Serializer serializer = null;
 
     /**
      * 系统SPI目录
@@ -105,7 +108,7 @@ public class SpiLoader {
      * @return
      * @param <T>
      */
-    public static <T> T getInstance(Class<?> tClass, String key){
+    private static <T> T getImplClass(Class<?> tClass, String key){
         String tClassName = tClass.getName();
         Map<String, Class<?>> keyClassMap = loaderMap.get(tClassName);
         if(keyClassMap == null){
@@ -126,7 +129,27 @@ public class SpiLoader {
                 throw new RuntimeException(errorMsg, e);
             }
         }
+        log.info("[spiLoader]: load serializer \"{}\"", implClassName);
 
         return (T) instanceCache.get(implClassName);
     }
+
+    /**
+     * 双检锁模式获取实现类
+     * @param tClass
+     * @param key
+     * @return
+     * @param <T>
+     */
+    public static <T> T getInstance(Class<?> tClass, String key){
+        if (serializer == null){
+            synchronized (SpiLoader.class){
+                if (serializer == null){
+                    serializer = getImplClass(tClass, key);
+                }
+            }
+        }
+        return (T) serializer;
+    }
+
 }
