@@ -1,12 +1,9 @@
 package org.xq.xqrpc.serializer;
 
 import org.xq.xqrpc.serializer.FastJsonSerializer.FastJsonSerializer;
-import org.xq.xqrpc.serializer.JsonSerializer.JsonSerializer;
 import org.xq.xqrpc.spi.SpiLoader;
-import sun.security.provider.ConfigFile;
 
-import java.util.HashMap;
-import java.util.Map;
+
 
 /**
  * 序列化器工厂 - 获取序列化器对象
@@ -18,7 +15,7 @@ public class SerializerFactory {
     /**
      * 静态内部类加载序列化器实现实例
      */
-    private static class FactorySingleton{
+    private static class SerializerSingleton{
         private static Serializer loadSerializer(String key){
             SpiLoader.load(Serializer.class);
             return SpiLoader.getInstance(Serializer.class, key);
@@ -36,6 +33,6 @@ public class SerializerFactory {
      * @return
      */
     public static Serializer getInstance(String key){
-        return FactorySingleton.loadSerializer(key);
+        return SerializerSingleton.loadSerializer(key);
     }
 }

@@ -30,7 +30,7 @@ public class RpcServiceConfig {
     private Integer serverPort = 8080;
 
     /**
-     * Mock
+     * 模拟调用Mock
      */
     private boolean mock = false;
 
@@ -39,4 +39,8 @@ public class RpcServiceConfig {
      */
     private String serializer = SerializerKeys.FastJson;
 
+    /**
+     * 注册中心配置
+     */
+    private RegistryConfig registryConfig = new RegistryConfig();
 }

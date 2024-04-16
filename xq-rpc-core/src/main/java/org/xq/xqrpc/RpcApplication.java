@@ -1,8 +1,11 @@
 package org.xq.xqrpc;
 
 import lombok.extern.slf4j.Slf4j;
+import org.xq.xqrpc.config.RegistryConfig;
 import org.xq.xqrpc.config.RpcServiceConfig;
 import org.xq.xqrpc.constant.RpcConstant;
+import org.xq.xqrpc.registry.Registry;
+import org.xq.xqrpc.registry.RegistryFactory;
 import org.xq.xqrpc.utils.ConfigUtils;
 
 /**
@@ -19,6 +22,13 @@ public class RpcApplication {
     public static void init(RpcServiceConfig serviceConfig){
         rpcServiceConfig = serviceConfig;
         log.info("[RpcApplication]: Rpc init, config = {}", serviceConfig.toString());
+        // 注册中心
+        RegistryConfig registryConfig = rpcServiceConfig.getRegistryConfig();
+        Registry registry = RegistryFactory.getInstance(registryConfig.getRegistry());
+        registry.init(registryConfig);
+        log.info("[RpcApplication]: registry init, config = {}", registryConfig);
+        // 创建并注册shutdown hook, jvm 退出时执行
+        Runtime.getRuntime().addShutdownHook(new Thread(registry::destroy));
     }
 
     /**

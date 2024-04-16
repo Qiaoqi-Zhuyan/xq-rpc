@@ -1,12 +1,10 @@
 package org.xq.xqrpc.spi;
 
 import cn.hutool.core.io.resource.ResourceUtil;
-import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import org.xq.xqrpc.serializer.Serializer;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.*;
@@ -35,7 +33,7 @@ public class SpiLoader {
      */
     private static volatile Map<String, Object> instanceCache = new ConcurrentHashMap<>();
 
-    private static volatile Serializer serializer = null;
+    private static volatile Object ImplClassInstance = null;
 
     /**
      * 系统SPI目录
@@ -142,14 +140,14 @@ public class SpiLoader {
      * @param <T>
      */
     public static <T> T getInstance(Class<?> tClass, String key){
-        if (serializer == null){
+        if (ImplClassInstance == null){
             synchronized (SpiLoader.class){
-                if (serializer == null){
-                    serializer = getImplClass(tClass, key);
+                if (ImplClassInstance == null){
+                    return getImplClass(tClass, key);
                 }
             }
         }
-        return (T) serializer;
+        return (T) ImplClassInstance;
     }
 
 }

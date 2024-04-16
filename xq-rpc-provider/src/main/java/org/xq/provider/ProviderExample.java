@@ -2,7 +2,12 @@ package org.xq.provider;
 
 import org.xq.common.service.UserService;
 import org.xq.xqrpc.RpcApplication;
+import org.xq.xqrpc.config.RegistryConfig;
+import org.xq.xqrpc.config.RpcServiceConfig;
+import org.xq.xqrpc.model.ServiceMetaInfo;
 import org.xq.xqrpc.registry.LocalRegistry;
+import org.xq.xqrpc.registry.Registry;
+import org.xq.xqrpc.registry.RegistryFactory;
 import org.xq.xqrpc.serializer.Serializer;
 import org.xq.xqrpc.server.HttpServer;
 import org.xq.xqrpc.server.VertxHttpServer;
@@ -17,9 +22,24 @@ public class ProviderExample {
         // rpc框架初始化
         RpcApplication.init();
 
-        // 注册服务
-        LocalRegistry.register(UserService.class.getName(), UserServiceImpl.class);
 
+        // 注册服务
+        String serviceName = UserService.class.getName();
+        LocalRegistry.register(serviceName, UserServiceImpl.class);
+
+        RpcServiceConfig rpcServiceConfig = RpcApplication.getConfig();
+        RegistryConfig registryConfig = RpcApplication.getConfig().getRegistryConfig();
+        Registry registry = RegistryFactory.getInstance(registryConfig.getRegistry());
+        ServiceMetaInfo serviceMetaInfo = new ServiceMetaInfo();
+        serviceMetaInfo.setServiceName(serviceName);
+        serviceMetaInfo.setServiceHost(rpcServiceConfig.getServerHost());
+        serviceMetaInfo.setServicePort(rpcServiceConfig.getServerPort());
+        try{
+            registry.register(serviceMetaInfo);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        System.out.println(serviceMetaInfo.getServiceKey());
         // 启动web服务
         HttpServer httpServer = new VertxHttpServer();
         httpServer.doStart(RpcApplication.getConfig().getServerPort());

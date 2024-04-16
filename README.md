@@ -4,6 +4,8 @@
 
 ![dubbo](doc/dubboframework.png "设计思路")
 # TODO
+### http请求
+- 基于Vertx的http请求响应
 ### 全局加载器 
 - 支持properties, yaml和yml格式格式的全局加载器
 - 监听热加载 
@@ -21,6 +23,7 @@
    - kryo
    - protostuff
 ### 注册中心
+- 使用etcd的注册中心实现
 ### 自定义Rpc协议
 ### 负载均衡
 ### 重试机制

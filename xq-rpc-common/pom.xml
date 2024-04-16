@@ -9,8 +9,8 @@
   <properties>
     <java.version>8</java.version>
   </properties>
-  <dependencies>
 
+  <dependencies>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>

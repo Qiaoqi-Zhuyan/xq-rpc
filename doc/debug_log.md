@@ -18,3 +18,6 @@
 ```
 2. YamlUnit 和 BeanUnit, 将设置文件转为bean对象处理方法
 3. 双检锁单例模式实现
+
+## 4.16
+1. 修改spiloader的实现, 支持不同的spi接口的返回

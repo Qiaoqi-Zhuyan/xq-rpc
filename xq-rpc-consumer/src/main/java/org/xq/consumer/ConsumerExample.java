@@ -16,6 +16,7 @@ public class ConsumerExample {
 //        RpcServiceConfig serviceConfig = ConfigUtils.loadConfig(RpcConstant.YAML_CONFIG_FILE, RpcServiceConfig.class, "rpc");
 //        System.out.println(serviceConfig);
         UserService userService = ServiceProxyFactory.getProxy(UserService.class);
-        System.out.println(userService.getUser(new User("xiaoqi user")));
+        User user = userService.getUser(new User("[EasyConsumer]xiaoqi user"));
+        System.out.println(user);
     }
 }
