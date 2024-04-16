@@ -19,6 +19,7 @@
    - FastJson
    - hessian
    - kryo
+   - protostuff
 ### 注册中心
 ### 自定义Rpc协议
 ### 负载均衡

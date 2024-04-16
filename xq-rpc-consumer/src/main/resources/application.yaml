@@ -4,4 +4,4 @@ rpc:
     serverPort: 8080
     serverHost: localhost
     mock: false
-    serializer: kryo
+    serializer: protostuff

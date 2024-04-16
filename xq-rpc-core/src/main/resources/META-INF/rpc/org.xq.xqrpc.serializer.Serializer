@@ -2,3 +2,4 @@ json=org.xq.xqrpc.serializer.JsonSerializer.JsonSerializer
 fastjson=org.xq.xqrpc.serializer.FastJsonSerializer.FastJsonSerializer
 hessian=org.xq.xqrpc.serializer.HessianSerializer.HessianSerializer
 kryo=org.xq.xqrpc.serializer.KryoSerializer.KryoSerializer
+protostuff=org.xq.xqrpc.serializer.ProtostuffSerializer.ProtostuffSerializer
