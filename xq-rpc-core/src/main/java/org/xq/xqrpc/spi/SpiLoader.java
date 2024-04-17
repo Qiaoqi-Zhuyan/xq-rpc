@@ -2,6 +2,9 @@ package org.xq.xqrpc.spi;
 
 import cn.hutool.core.io.resource.ResourceUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.xq.xqrpc.registry.EtcdRegistry.EtcdRegistry;
 import org.xq.xqrpc.serializer.Serializer;
 
 import java.io.BufferedReader;
@@ -20,6 +23,8 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Slf4j
 public class SpiLoader {
+
+    private static final Logger logger = LoggerFactory.getLogger(SpiLoader.class);
 
     /**
      * 存储已加载的类: 接口名 -> (key -> 实现类)
@@ -58,7 +63,7 @@ public class SpiLoader {
      * @return
      */
     public static Map<String, Class<?>> load(Class<?> loadClass){
-        log.info("[spiLoader]: load spi type: {}", loadClass.getName());
+        logger.info("[spiLoader]: load spi type: {}", loadClass.getName());
         Map<String, Class<?>> keyClassMap = new HashMap<>();
         // 扫描路径
         for (String scanDir : SCAN_DIR){
@@ -79,7 +84,7 @@ public class SpiLoader {
                         }
                     }
                 }catch (Exception e){
-                    log.info("[spiLoader]: spi resource load error", e);
+                    logger.info("[spiLoader]: spi resource load error", e);
                     e.printStackTrace();
                 }
             }
@@ -93,7 +98,7 @@ public class SpiLoader {
      * 加载所有类
      */
     public static void loadAll(){
-        log.info("[spiLoader] load all spi");
+        logger.info("[spiLoader] load all spi");
         for (Class<?> aClass : LOAD_CLASS_LIST){
             load(aClass);
         }
@@ -127,7 +132,7 @@ public class SpiLoader {
                 throw new RuntimeException(errorMsg, e);
             }
         }
-        log.info("[spiLoader]: load serializer \"{}\"", implClassName);
+        logger.info("[spiLoader]: load serializer \"{}\"", implClassName);
 
         return (T) instanceCache.get(implClassName);
     }

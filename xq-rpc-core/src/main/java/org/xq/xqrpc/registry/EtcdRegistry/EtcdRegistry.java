@@ -11,7 +11,10 @@ import io.etcd.jetcd.options.GetOption;
 import io.etcd.jetcd.options.PutOption;
 import io.etcd.jetcd.watch.WatchEvent;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xq.xqrpc.model.ServiceMetaInfo;
+import org.xq.xqrpc.proxy.MockServiceProxy;
 import org.xq.xqrpc.registry.LocalRegistry;
 import org.xq.xqrpc.registry.Registry;
 import org.xq.xqrpc.config.RegistryConfig;
@@ -27,6 +30,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class EtcdRegistry implements Registry {
 
+    private static final Logger logger = LoggerFactory.getLogger(EtcdRegistry.class);
     private Client client;
 
     /**
@@ -118,7 +122,7 @@ public class EtcdRegistry implements Registry {
         // 优先读缓存
         List<ServiceMetaInfo> cachedServiceMetaInfoList = registryServiceCache.readCache();
         if (cachedServiceMetaInfoList != null) {
-            log.info("[EtcdRegistry]: read from cachedService");
+            logger.info("[EtcdRegistry]: read from cachedService");
             return cachedServiceMetaInfoList;
         }
         String searchPrefix = ETCD_ROOT_PATH + serviceKey + "/";
@@ -153,7 +157,7 @@ public class EtcdRegistry implements Registry {
      */
     @Override
     public void destroy() {
-        log.info("[EtcdRegistry]: Node destroy");
+        logger.info("[EtcdRegistry]: Node destroy");
 
         for(String key: localRegisterNodeKeySet){
             try {
