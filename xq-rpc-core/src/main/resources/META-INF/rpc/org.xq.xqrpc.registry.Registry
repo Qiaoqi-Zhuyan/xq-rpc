@@ -1,1 +1,2 @@
 etcd=org.xq.xqrpc.registry.EtcdRegistry.EtcdRegistry
+zookeeper=org.xq.xqrpc.registry.ZookeeperRegistry.ZookeeperRegistry

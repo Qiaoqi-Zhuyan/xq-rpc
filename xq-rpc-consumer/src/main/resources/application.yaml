@@ -5,3 +5,6 @@ rpc:
     serverHost: 127.0.0.1
     mock: false
     serializer: protostuff
+    registryConfig:
+        registry: zookeeper
+        address: localhost:2181

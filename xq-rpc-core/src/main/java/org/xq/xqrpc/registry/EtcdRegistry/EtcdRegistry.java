@@ -4,7 +4,6 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ConcurrentHashSet;
 import cn.hutool.cron.CronUtil;
 import cn.hutool.cron.task.Task;
-import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson2.JSON;
 import io.etcd.jetcd.*;
 import io.etcd.jetcd.options.GetOption;
@@ -14,8 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xq.xqrpc.model.ServiceMetaInfo;
-import org.xq.xqrpc.proxy.MockServiceProxy;
-import org.xq.xqrpc.registry.LocalRegistry;
 import org.xq.xqrpc.registry.Registry;
 import org.xq.xqrpc.config.RegistryConfig;
 import org.xq.xqrpc.registry.RegistryServiceCache;
@@ -57,7 +54,7 @@ public class EtcdRegistry implements Registry {
     /**
      * 根节点
      */
-    private static final String ETCD_ROOT_PATH = "/rpc/";
+    private static final String ETCD_ROOT_PATH = "/rpc/etcd";
 
     /**
      * 初始化

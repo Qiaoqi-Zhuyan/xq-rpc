@@ -8,7 +8,6 @@ import org.xq.xqrpc.config.RpcServiceConfig;
 import org.xq.xqrpc.constant.RpcConstant;
 import org.xq.xqrpc.registry.Registry;
 import org.xq.xqrpc.registry.RegistryFactory;
-import org.xq.xqrpc.spi.SpiLoader;
 import org.xq.xqrpc.utils.ConfigUtils;
 
 /**

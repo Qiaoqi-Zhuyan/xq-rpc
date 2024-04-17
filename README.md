@@ -33,6 +33,8 @@
   - 维护一个本地的服务信息的缓存列表
   - 缓存更新的监听机制, 使用etcd的watch监听key发生修改或删除的时候, 触发事件通知监听者
     ![](doc/etcd_watch.png)
+- 支持zookeeper实现的注册中心
+  - 使用curator操作zookeeper
 ### 自定义Rpc协议
 ### 负载均衡
 ### 重试机制

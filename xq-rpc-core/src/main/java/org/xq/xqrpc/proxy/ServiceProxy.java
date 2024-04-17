@@ -53,7 +53,6 @@ public class ServiceProxy implements InvocationHandler {
             ServiceMetaInfo serviceMetaInfo = new ServiceMetaInfo();
             serviceMetaInfo.setServiceName(serviceName);
             serviceMetaInfo.setServiceVersion(RpcConstant.DEFAULT_SERVICE_VERSION);
-            System.out.println("[ServiceProxy]: meta service info: " + serviceMetaInfo);
             List<ServiceMetaInfo> serviceMetaInfoList = registry.serviceDiscovery(serviceMetaInfo.getServiceKey());
             if(CollUtil.isEmpty(serviceMetaInfoList)){
                 throw new RuntimeException("no such service address");
