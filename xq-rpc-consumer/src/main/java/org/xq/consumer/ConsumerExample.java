@@ -15,8 +15,10 @@ public class ConsumerExample {
         // 可选yaml, yml和properties
 //        RpcServiceConfig serviceConfig = ConfigUtils.loadConfig(RpcConstant.YAML_CONFIG_FILE, RpcServiceConfig.class, "rpc");
 //        System.out.println(serviceConfig);
-        UserService userService = ServiceProxyFactory.getProxy(UserService.class);
-        User user = userService.getUser(new User("[EasyConsumer]xiaoqi user"));
-        System.out.println(user);
+        for (int i = 0; i < 3; i++){
+            UserService userService = ServiceProxyFactory.getProxy(UserService.class);
+            User user = userService.getUser(new User("xiaoqi user"));
+            System.out.println("[EasyConsumer]: "  + user);
+        }
     }
 }

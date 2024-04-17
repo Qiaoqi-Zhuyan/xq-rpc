@@ -1,6 +1,8 @@
 package org.xq.xqrpc.proxy;
 
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -11,6 +13,7 @@ import java.lang.reflect.Method;
 @Slf4j
 public class MockServiceProxy implements InvocationHandler {
 
+    private static final Logger logger = LoggerFactory.getLogger(MockServiceProxy.class);
     /**
      * 调用代理
      * @return
@@ -20,7 +23,7 @@ public class MockServiceProxy implements InvocationHandler {
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         // 根据方法的返回值类型, 生成特定的默认值对象
         Class<?> methodReturnType = method.getReturnType();
-        log.info("mock invoke{}", method.getName());
+        logger.info("mock invoke{}", method.getName());
         return getDefaultObject(methodReturnType);
     }
 
