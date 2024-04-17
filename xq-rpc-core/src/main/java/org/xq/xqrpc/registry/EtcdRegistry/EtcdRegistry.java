@@ -10,6 +10,7 @@ import io.etcd.jetcd.options.GetOption;
 import io.etcd.jetcd.options.PutOption;
 import lombok.extern.slf4j.Slf4j;
 import org.xq.xqrpc.model.ServiceMetaInfo;
+import org.xq.xqrpc.registry.LocalRegistry;
 import org.xq.xqrpc.registry.Registry;
 import org.xq.xqrpc.config.RegistryConfig;
 
@@ -126,6 +127,15 @@ public class EtcdRegistry implements Registry {
     @Override
     public void destroy() {
         log.info("[EtcdRegistry]: Node destroy");
+
+        for(String key: localRegisterNodeKeySet){
+            try {
+                kvClient.delete(ByteSequence.from(key, StandardCharsets.UTF_8)).get();
+            } catch (Exception e){
+                throw new RuntimeException(key + " node destroy off");
+            }
+        }
+
         if (kvClient != null)
             kvClient.close();
         if (kvClient != null)
