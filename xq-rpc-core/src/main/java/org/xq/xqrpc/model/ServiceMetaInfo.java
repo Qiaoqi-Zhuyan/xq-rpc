@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
  * 注册信息封装
  */
@@ -37,6 +39,11 @@ public class ServiceMetaInfo {
      * 服务分组
      */
     private String serviceGroup = "default";
+
+    /**
+     * 注册时间
+     */
+    private Date registryTime;
 
     /**
      * 获取服务键名

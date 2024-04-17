@@ -12,6 +12,7 @@ import org.xq.xqrpc.serializer.Serializer;
 import org.xq.xqrpc.server.HttpServer;
 import org.xq.xqrpc.server.VertxHttpServer;
 
+import java.util.Date;
 import java.util.ServiceLoader;
 
 /**
@@ -34,6 +35,7 @@ public class ProviderExample {
         serviceMetaInfo.setServiceName(serviceName);
         serviceMetaInfo.setServiceHost(rpcServiceConfig.getServerHost());
         serviceMetaInfo.setServicePort(rpcServiceConfig.getServerPort());
+        serviceMetaInfo.setRegistryTime(new Date());
         try{
             registry.register(serviceMetaInfo);
         }catch (Exception e){

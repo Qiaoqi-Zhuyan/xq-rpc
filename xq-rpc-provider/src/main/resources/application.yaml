@@ -4,6 +4,6 @@ rpc:
     serverPort: 9090
     serverHost: 127.0.0.1
     serializer: protostuff
-    registryConfig:
-        registry: zookeeper
-        address: localhost:2181
+#    registryConfig:
+#        registry: etcd
+#        address: localhost:2380
