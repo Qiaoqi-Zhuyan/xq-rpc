@@ -59,7 +59,7 @@ public class EtcdRegistry implements Registry {
         // 设置存储的键值对
         String registerKey = ETCD_ROOT_PATH + serviceMetaInfo.getServiceNodeKey();
         ByteSequence key = ByteSequence.from(registerKey, StandardCharsets.UTF_8);
-        ByteSequence value = ByteSequence.from(JSONUtil.toJsonStr(serviceMetaInfo), StandardCharsets.UTF_8);
+        ByteSequence value = ByteSequence.from(JSON.toJSONString(serviceMetaInfo), StandardCharsets.UTF_8);
 
         // 将键值与租约关联, 设置过期时间
         PutOption putOption = PutOption.builder().withLeaseId(leaseId).build();
@@ -97,7 +97,7 @@ public class EtcdRegistry implements Registry {
             return keyValues.stream()
                     .map(keyValue -> {
                         String value = keyValue.getValue().toString(StandardCharsets.UTF_8);
-                        return JSONUtil.toBean(value, ServiceMetaInfo.class);
+                        return JSON.parseObject(value, ServiceMetaInfo.class);
                     }).collect(Collectors.toList());
         }catch (Exception e){
             throw new RuntimeException("[EtcdRegistry]: acquire service failed", e);

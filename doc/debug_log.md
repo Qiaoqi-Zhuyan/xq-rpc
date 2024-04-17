@@ -21,3 +21,4 @@
 
 ## 4.16
 1. 修改spiloader的实现, 支持不同的spi接口的返回
+2. etcd无法请求, provide的http handle中需要将service放在本地的注册中, etcd请求会获取本地的注册中的实现类中
