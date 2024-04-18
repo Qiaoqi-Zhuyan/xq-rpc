@@ -4,7 +4,11 @@
   <groupId>org.xq</groupId>
   <artifactId>xq-rpc-basic</artifactId>
   <version>1.0-SNAPSHOT</version>
-
+  <properties>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <java.verison>17</java.verison>
+  </properties>
   <dependencies>
     <!--vertx-->
     <dependency>
@@ -28,6 +32,19 @@
     </dependency>
 
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>17</source>
+          <target>17</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>
 
