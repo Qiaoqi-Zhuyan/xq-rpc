@@ -11,6 +11,8 @@ import org.xq.xqrpc.registry.RegistryFactory;
 import org.xq.xqrpc.serializer.Serializer;
 import org.xq.xqrpc.server.HttpServer;
 import org.xq.xqrpc.server.VertxHttpServer;
+import org.xq.xqrpc.server.tcp.VertxTcpClient;
+import org.xq.xqrpc.server.tcp.VertxTcpServer;
 
 import java.util.Date;
 import java.util.ServiceLoader;
@@ -43,8 +45,7 @@ public class ProviderExample {
         }
         System.out.println(serviceMetaInfo.getServiceKey());
         // 启动web服务
-        HttpServer httpServer = new VertxHttpServer();
-        httpServer.doStart(RpcApplication.getConfig().getServerPort());
-
+        VertxTcpServer vertxTcpServer = new VertxTcpServer();
+        vertxTcpServer.doStart(8080);
     }
 }
