@@ -42,6 +42,7 @@
   用byte数组拼接消息
 - 实现消息编码器和消息解码器, 将java的消息对象和字节数组互相转化
     ![](doc/encoder_decoder.png)
+- 使用netty的pipeline组合多个handler, 请求处理器接受请求，通过反射调用服务实现类
 
 ### 负载均衡
 ### 重试机制
