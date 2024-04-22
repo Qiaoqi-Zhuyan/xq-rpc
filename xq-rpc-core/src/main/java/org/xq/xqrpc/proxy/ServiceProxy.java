@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.xq.xqrpc.RpcApplication;
 import org.xq.xqrpc.config.RpcServiceConfig;
 import org.xq.xqrpc.constant.RpcConstant;
+import org.xq.xqrpc.loadBalancer.LoadBalancer;
+import org.xq.xqrpc.loadBalancer.LoadBalancerFactory;
 import org.xq.xqrpc.model.RpcRequest;
 import org.xq.xqrpc.model.RpcResponse;
 import org.xq.xqrpc.model.ServiceMetaInfo;
@@ -31,7 +33,9 @@ import org.xq.xqrpc.server.tcp.VertxTcpClient;
 import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.concurrent.CompletableFuture;
 
@@ -70,7 +74,13 @@ public class ServiceProxy implements InvocationHandler {
             if (CollUtil.isEmpty(serviceMetaInfoList)) {
                 throw new RuntimeException("no such service address");
             }
-            ServiceMetaInfo selectServiceMetaInfo = serviceMetaInfoList.get(0);
+            // 负载均衡
+            LoadBalancer loadBalancer = LoadBalancerFactory.getInstance(rpcServiceConfig.getLoadBalancer());
+            // 将调用方法名作为负载均衡参数 - 调用相同的方法，hashcode一定相同
+            Map<String, Object> requestParams = new HashMap<>();
+            requestParams.put("methodName", rpcRequest.getMethodName());
+            ServiceMetaInfo selectServiceMetaInfo = loadBalancer.select(requestParams, serviceMetaInfoList);
+            log.info(logPrefix + "service address " + selectServiceMetaInfo.getServiceAddress());
             //发送tcp请求
             RpcResponse rpcResponse = VertxTcpClient.doRequest(rpcRequest, selectServiceMetaInfo);
             return rpcResponse.getData();

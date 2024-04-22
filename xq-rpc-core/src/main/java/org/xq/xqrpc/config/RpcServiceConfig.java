@@ -40,6 +40,9 @@ public class RpcServiceConfig {
      */
     private String serializer = SerializerKeys.FastJson;
 
+    /**
+     * 负载均衡器
+     */
     private String loadBalancer = LoadBalancerKeys.ROUND_ROBIN;
 
     /**
