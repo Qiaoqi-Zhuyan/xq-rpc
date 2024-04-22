@@ -1,0 +1,3 @@
+roundRobin=org.xq.xqrpc.loadBalancer.LoadBalancerImpl.RoundRobinLoadBalancer
+random=org.xq.xqrpc.loadBalancer.LoadBalancerImpl.RandomLoadBalancer
+consistentHash=org.xq.xqrpc.loadBalancer.LoadBalancerImpl.ConsistentHashLoadBalancer

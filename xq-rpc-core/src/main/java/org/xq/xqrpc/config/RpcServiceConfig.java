@@ -1,6 +1,7 @@
 package org.xq.xqrpc.config;
 
 import lombok.Data;
+import org.xq.xqrpc.loadBalancer.LoadBalancerKeys;
 import org.xq.xqrpc.serializer.SerializerKeys;
 
 /**
@@ -38,6 +39,8 @@ public class RpcServiceConfig {
      * 序列化器
      */
     private String serializer = SerializerKeys.FastJson;
+
+    private String loadBalancer = LoadBalancerKeys.ROUND_ROBIN;
 
     /**
      * 注册中心配置
