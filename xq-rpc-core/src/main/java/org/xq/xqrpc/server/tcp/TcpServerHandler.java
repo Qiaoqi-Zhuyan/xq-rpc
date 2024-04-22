@@ -24,17 +24,17 @@ public class TcpServerHandler implements Handler<NetSocket> {
     @Override
     public void handle(NetSocket netSocket) {
         // 处理连接
-        netSocket.handler(buffer -> {
-           // 接受请求, 解码
-           ProtocolMessage<RpcRequest> requestProtocolMessage;
-           try{
-               requestProtocolMessage = (ProtocolMessage<RpcRequest>) ProtocolMessageDecoder.decode(buffer);
-           }catch (IOException ex){
-               throw new RuntimeException("[TcpServerHandler]: protocol decode failed");
-           }
-           RpcRequest rpcRequest = requestProtocolMessage.getBody();
+        TcpBufferHandlerWrapper bufferHandlerWrapper = new TcpBufferHandlerWrapper(buffer -> {
+            // 接受请求, 解码
+            ProtocolMessage<RpcRequest> requestProtocolMessage;
+            try{
+                requestProtocolMessage = (ProtocolMessage<RpcRequest>) ProtocolMessageDecoder.decode(buffer);
+            }catch (IOException ex){
+                throw new RuntimeException("[TcpServerHandler]: protocol decode failed");
+            }
+            RpcRequest rpcRequest = requestProtocolMessage.getBody();
 
-           // 处理请求
+            // 处理请求
             RpcResponse rpcResponse = new RpcResponse();
             try{
                 // 通过反射进行调用
@@ -62,5 +62,6 @@ public class TcpServerHandler implements Handler<NetSocket> {
                 throw new RuntimeException("[TcpServerHandler]: protocol decode failed");
             }
         });
+        netSocket.handler(bufferHandlerWrapper);
     }
 }

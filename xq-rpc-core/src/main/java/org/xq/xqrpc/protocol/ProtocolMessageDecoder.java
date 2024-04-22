@@ -34,7 +34,7 @@ public class ProtocolMessageDecoder {
         header.setType(buffer.getByte(3));
         header.setStatus(buffer.getByte(4));
         header.setRequestId(buffer.getLong(5));
-        header.setBodyLength(Buffer.buffer().getInt(13));
+        header.setBodyLength(buffer.getInt(13));
         // 指定长度, 避免粘爆
         byte[] bodyBytes = buffer.getBytes(17, 17 + header.getBodyLength());
         // 解析body

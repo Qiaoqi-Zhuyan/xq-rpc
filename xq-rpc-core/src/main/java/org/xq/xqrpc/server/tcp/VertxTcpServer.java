@@ -1,8 +1,10 @@
 package org.xq.xqrpc.server.tcp;
 
+import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.net.NetServer;
+import io.vertx.core.parsetools.RecordParser;
 import lombok.extern.slf4j.Slf4j;
 import org.xq.xqrpc.server.HttpServer;
 
@@ -18,10 +20,6 @@ public class VertxTcpServer implements HttpServer {
 
     private final String logPrefix = "[VertxTcpServer]: ";
 
-    private byte[] handleRequest(byte[] request){
-        return "client test".getBytes();
-    }
-
     @Override
     public void doStart(int port) {
         // 创建vertx服务
@@ -30,15 +28,7 @@ public class VertxTcpServer implements HttpServer {
         // 创建tcp服务器
         NetServer server = vertx.createNetServer();
 
-        server.connectHandler(netSocket -> {
-            netSocket.handler(buffer -> {
-                // 处理接受到的字节数组
-                byte[] request = buffer.getBytes();
-                byte[] response = handleRequest(request);
-                // 发送请求,字节数组
-                netSocket.write(Buffer.buffer(response));
-            });
-        });
+        server.connectHandler(new TcpServerHandler());
 
         // 启动tcp服务器并监听端口
         server.listen(port, netServerAsyncResult -> {

@@ -46,6 +46,6 @@ public class ProviderExample {
         System.out.println(serviceMetaInfo.getServiceKey());
         // 启动web服务
         VertxTcpServer vertxTcpServer = new VertxTcpServer();
-        vertxTcpServer.doStart(8080);
+        vertxTcpServer.doStart(RpcApplication.getConfig().getServerPort());
     }
 }

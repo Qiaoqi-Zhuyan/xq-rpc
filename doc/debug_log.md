@@ -33,3 +33,14 @@
         }
 ```
 应该判断null, 不能用isEmpty判断
+
+## 4.22
+出现无法通过tcp获取实例, 原因在`ProtocolMessageDecoder.java` 中, 在对消息进行编码的时候
+```java
+header.setBodyLength(buffer.getInt(13));
+```
+这行代码错写成
+```java
+header.setBodyLength(Buffer.buffer().getInt(13));
+```
+自动补全的时候一直按tab, 没有去检查这部分代码

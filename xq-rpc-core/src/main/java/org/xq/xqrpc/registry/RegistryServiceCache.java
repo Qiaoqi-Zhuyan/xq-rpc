@@ -12,7 +12,7 @@ public class RegistryServiceCache {
     /**
      * 服务缓存
      */
-    List<ServiceMetaInfo> serviceCache;
+    List<ServiceMetaInfo> serviceCache = null;
 
     /**
      * 写入缓存
@@ -34,6 +34,6 @@ public class RegistryServiceCache {
      * 清空缓存
      */
     public void clearCache(){
-        this.serviceCache.clear();
+        this.serviceCache = null;
     }
 }

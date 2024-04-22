@@ -26,6 +26,7 @@ import org.xq.xqrpc.serializer.FastJsonSerializer.FastJsonSerializer;
 import org.xq.xqrpc.serializer.Serializer;
 import org.xq.xqrpc.serializer.JdkSerializer.JdkSerializer;
 import org.xq.xqrpc.serializer.SerializerFactory;
+import org.xq.xqrpc.server.tcp.VertxTcpClient;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
@@ -58,60 +59,43 @@ public class ServiceProxy implements InvocationHandler {
                 .parameterTypes(method.getParameterTypes())
                 .args(args)
                 .build();
-        //            // 序列化
-//            byte[] bodyBytes = serializer.serialize(rpcRequest);
-        // 发送请求
-        // 地址使用注册中心和服务发现机制解决
-        RpcServiceConfig rpcServiceConfig = RpcApplication.getConfig();
-        Registry registry = RegistryFactory.getInstance(rpcServiceConfig.getRegistryConfig().getRegistry());
-        ServiceMetaInfo serviceMetaInfo = new ServiceMetaInfo();
-        serviceMetaInfo.setServiceName(serviceName);
-        serviceMetaInfo.setServiceVersion(RpcConstant.DEFAULT_SERVICE_VERSION);
-        List<ServiceMetaInfo> serviceMetaInfoList = registry.serviceDiscovery(serviceMetaInfo.getServiceKey());
-        if(CollUtil.isEmpty(serviceMetaInfoList)){
-            throw new RuntimeException("no such service address");
+
+        try{
+            RpcServiceConfig rpcServiceConfig = RpcApplication.getConfig();
+            Registry registry = RegistryFactory.getInstance(rpcServiceConfig.getRegistryConfig().getRegistry());
+            ServiceMetaInfo serviceMetaInfo = new ServiceMetaInfo();
+            serviceMetaInfo.setServiceName(serviceName);
+            serviceMetaInfo.setServiceVersion(RpcConstant.DEFAULT_SERVICE_VERSION);
+            List<ServiceMetaInfo> serviceMetaInfoList = registry.serviceDiscovery(serviceMetaInfo.getServiceKey());
+            if (CollUtil.isEmpty(serviceMetaInfoList)) {
+                throw new RuntimeException("no such service address");
+            }
+            ServiceMetaInfo selectServiceMetaInfo = serviceMetaInfoList.get(0);
+            //发送tcp请求
+            RpcResponse rpcResponse = VertxTcpClient.doRequest(rpcRequest, selectServiceMetaInfo);
+            return rpcResponse.getData();
+        }catch (Exception e){
+            throw new RuntimeException(logPrefix + "invoke failed");
         }
+    }
 
-        ServiceMetaInfo selectedServiceMetaInfo = serviceMetaInfoList.get(0);
-        String serviceAddress = selectedServiceMetaInfo.getServiceAddress();
-        Vertx vertx = Vertx.vertx();
-        NetClient netClient = vertx.createNetClient();
-        CompletableFuture<RpcResponse> responseCompletableFuture = new CompletableFuture<>();
-        netClient.connect(selectedServiceMetaInfo.getServicePort(), selectedServiceMetaInfo.getServiceHost(), netSocketAsyncResult -> {
-           if (netSocketAsyncResult.succeeded()){
-               log.info(logPrefix + "Connect to Tcp server");
-               io.vertx.core.net.NetSocket netSocket = netSocketAsyncResult.result();
-               // 构造消息, 发送请求
-               ProtocolMessage.Header header = new ProtocolMessage.Header();
-               header.setMagic(ProtocolConstant.PROTOCOL_MAGIC);
-               header.setVersion(ProtocolConstant.PROTOCOL_VERSION);
-               header.setSerializer((byte) ProtocolMessageSerializerEnum.getEnumByValue(RpcApplication.getConfig().getSerializer()).getKey());
-               header.setType((byte) ProtocolMessageTypeEnum.REQUEST.getKey());
-               header.setRequestId(IdUtil.getSnowflakeNextId());
-               ProtocolMessage<RpcRequest> requestProtocolMessage = new ProtocolMessage<>(header, rpcRequest);
-               // 对请求进行编码
-               try{
-                   Buffer encodeBuffer = ProtocolMessageEncoder.encode(requestProtocolMessage);
-                   netSocket.write(encodeBuffer);
-               }catch (IOException e){
-                   throw new RuntimeException("protocol message encode fail");
-               }
-               // 接受响应, 阻塞式
-               netSocket.handler(buffer -> {
-                    try {
-                        ProtocolMessage<RpcResponse> responseProtocolMessage = (ProtocolMessage<RpcResponse>)ProtocolMessageDecoder.decode(buffer);
-                        responseCompletableFuture.complete(responseProtocolMessage.getBody());
-                    }catch (IOException e){
-                        throw new RuntimeException(logPrefix + "protocol decode fail");
-                    }
-               });
-           }else{
-               log.info(logPrefix + "fail to connect TCP server");
-           }
-        });
-        RpcResponse rpcResponse = responseCompletableFuture.get();
-        netClient.close();
-        return rpcResponse.getData();
-
+    /**
+     * 发送http请求
+     * @param selectedServiceMetaInfo
+     * @param bodyBytes
+     * @return
+     * @throws IOException
+     */
+    private static RpcResponse doHttpRequest(ServiceMetaInfo selectedServiceMetaInfo, byte[] bodyBytes) throws IOException{
+        final Serializer serializer = SerializerFactory.getInstance(RpcApplication.getConfig().getSerializer());
+        // 发送http请求
+        try (HttpResponse httpResponse = HttpRequest.post(selectedServiceMetaInfo.getServiceAddress())
+                .body(bodyBytes)
+                .execute()){
+            byte[] result = httpResponse.bodyBytes();
+            // 反序列
+            RpcResponse rpcResponse = serializer.deserialize(result, RpcResponse.class);
+            return rpcResponse;
+        }
     }
 }
