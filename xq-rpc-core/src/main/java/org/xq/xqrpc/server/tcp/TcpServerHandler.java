@@ -8,7 +8,6 @@ import org.xq.xqrpc.model.RpcResponse;
 import org.xq.xqrpc.protocol.ProtocolMessage;
 import org.xq.xqrpc.protocol.ProtocolMessageDecoder;
 import org.xq.xqrpc.protocol.ProtocolMessageEncoder;
-import org.xq.xqrpc.protocol.utils.ProtocolConstant;
 import org.xq.xqrpc.protocol.utils.ProtocolMessageTypeEnum;
 import org.xq.xqrpc.registry.LocalRegistry;
 

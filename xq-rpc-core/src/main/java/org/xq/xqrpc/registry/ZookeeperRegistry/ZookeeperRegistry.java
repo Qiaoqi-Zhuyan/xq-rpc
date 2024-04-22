@@ -55,7 +55,7 @@ public class ZookeeperRegistry implements Registry {
     /**
      * 根节点
      */
-    private static final String ZK_ROOT_PATH = "/rpc/zk";
+    private static final String ZK_ROOT_PATH = "/rpc/zk/";
 
     @Override
     public void init(RegistryConfig registryConfig) {
