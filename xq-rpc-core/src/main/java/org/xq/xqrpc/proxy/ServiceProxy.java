@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.xq.xqrpc.RpcApplication;
 import org.xq.xqrpc.config.RpcServiceConfig;
 import org.xq.xqrpc.constant.RpcConstant;
+import org.xq.xqrpc.fault.retry.RetryStrategy;
+import org.xq.xqrpc.fault.retry.RetryStrategyFactory;
 import org.xq.xqrpc.loadBalancer.LoadBalancer;
 import org.xq.xqrpc.loadBalancer.LoadBalancerFactory;
 import org.xq.xqrpc.model.RpcRequest;
@@ -70,8 +72,9 @@ public class ServiceProxy implements InvocationHandler {
             requestParams.put("methodName", rpcRequest.getMethodName());
             ServiceMetaInfo selectServiceMetaInfo = loadBalancer.select(requestParams, serviceMetaInfoList);
             log.info(logPrefix + "service address " + selectServiceMetaInfo.getServiceAddress());
-            //发送tcp请求
-            RpcResponse rpcResponse = VertxTcpClient.doRequest(rpcRequest, selectServiceMetaInfo);
+            //发送tcp请求 && 重试机制
+            RetryStrategy retryStrategy = RetryStrategyFactory.getInstance(rpcServiceConfig.getRetryStrategy());
+            RpcResponse rpcResponse = retryStrategy.doRetry(() -> VertxTcpClient.doRequest(rpcRequest, selectServiceMetaInfo));
             return rpcResponse.getData();
         }catch (Exception e){
             throw new RuntimeException(logPrefix + "invoke failed");
