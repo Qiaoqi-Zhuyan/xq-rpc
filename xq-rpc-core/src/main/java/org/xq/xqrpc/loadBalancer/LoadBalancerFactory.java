@@ -8,6 +8,9 @@ import org.xq.xqrpc.spi.SpiLoader;
  */
 public class LoadBalancerFactory {
 
+    /**
+     * 加载负载均衡器
+     */
     private static class LoadBalancerSingleton{
         private static LoadBalancer loadSerializer(String key){
             SpiLoader.load(LoadBalancer.class);

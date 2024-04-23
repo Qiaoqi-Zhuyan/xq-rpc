@@ -1,6 +1,7 @@
 package org.xq.xqrpc.config;
 
 import lombok.Data;
+import org.xq.xqrpc.fault.retry.RetryStrategyKeys;
 import org.xq.xqrpc.loadBalancer.LoadBalancerKeys;
 import org.xq.xqrpc.serializer.SerializerKeys;
 
@@ -44,6 +45,11 @@ public class RpcServiceConfig {
      * 负载均衡器
      */
     private String loadBalancer = LoadBalancerKeys.ROUND_ROBIN;
+
+    /**
+     * 重试策略
+     */
+    private String retryStrategy = RetryStrategyKeys.FIXED_INTERVAL;
 
     /**
      * 注册中心配置
