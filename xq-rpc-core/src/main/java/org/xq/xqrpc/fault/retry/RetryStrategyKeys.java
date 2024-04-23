@@ -15,5 +15,10 @@ public class RetryStrategyKeys {
      */
     public static final String FIXED_INTERVAL = "fixedInterval";
 
+    /**
+     * 指数回退
+     */
+    public static final String EXPONENTIAL_BACKOFF = "exponentialBackoff";
+
 
 }

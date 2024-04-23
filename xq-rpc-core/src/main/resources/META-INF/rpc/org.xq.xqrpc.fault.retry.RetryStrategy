@@ -1,2 +1,3 @@
 no=org.xq.xqrpc.fault.retry.retryImpl.NoRetryStrategy
 fixedInterval=org.xq.xqrpc.fault.retry.retryImpl.FixedIntervalRetryStrategy
+exponentialBackoff=org.xq.xqrpc.fault.retry.retryImpl.ExponentialBackoffRetryStrategy
