@@ -10,6 +10,8 @@ import org.xq.xqrpc.config.RpcServiceConfig;
 import org.xq.xqrpc.constant.RpcConstant;
 import org.xq.xqrpc.fault.retry.RetryStrategy;
 import org.xq.xqrpc.fault.retry.RetryStrategyFactory;
+import org.xq.xqrpc.fault.tolerant.TolerantStrategy;
+import org.xq.xqrpc.fault.tolerant.TolerantStrategyFactory;
 import org.xq.xqrpc.loadBalancer.LoadBalancer;
 import org.xq.xqrpc.loadBalancer.LoadBalancerFactory;
 import org.xq.xqrpc.model.RpcRequest;
@@ -72,9 +74,17 @@ public class ServiceProxy implements InvocationHandler {
             requestParams.put("methodName", rpcRequest.getMethodName());
             ServiceMetaInfo selectServiceMetaInfo = loadBalancer.select(requestParams, serviceMetaInfoList);
             log.info(logPrefix + "service address " + selectServiceMetaInfo.getServiceAddress());
-            //发送tcp请求 && 重试机制
-            RetryStrategy retryStrategy = RetryStrategyFactory.getInstance(rpcServiceConfig.getRetryStrategy());
-            RpcResponse rpcResponse = retryStrategy.doRetry(() -> VertxTcpClient.doRequest(rpcRequest, selectServiceMetaInfo));
+            //发送tcp请求
+            RpcResponse rpcResponse = new RpcResponse();
+            try{
+                // 重试机制
+                RetryStrategy retryStrategy = RetryStrategyFactory.getInstance(rpcServiceConfig.getRetryStrategy());
+                rpcResponse = retryStrategy.doRetry(() -> VertxTcpClient.doRequest(rpcRequest, selectServiceMetaInfo));
+            }catch (Exception e){
+                // 重试容错机制
+                TolerantStrategy tolerantStrategy = TolerantStrategyFactory.getInstance(rpcServiceConfig.getTolerantStrategy());
+                rpcResponse = tolerantStrategy.doTolerant(null, e);
+            }
             return rpcResponse.getData();
         }catch (Exception e){
             throw new RuntimeException(logPrefix + "invoke failed");

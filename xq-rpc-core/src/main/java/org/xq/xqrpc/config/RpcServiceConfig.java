@@ -2,6 +2,7 @@ package org.xq.xqrpc.config;
 
 import lombok.Data;
 import org.xq.xqrpc.fault.retry.RetryStrategyKeys;
+import org.xq.xqrpc.fault.tolerant.TolerantStrategyKeys;
 import org.xq.xqrpc.loadBalancer.LoadBalancerKeys;
 import org.xq.xqrpc.serializer.SerializerKeys;
 
@@ -50,6 +51,11 @@ public class RpcServiceConfig {
      * 重试策略
      */
     private String retryStrategy = RetryStrategyKeys.FIXED_INTERVAL;
+
+    /**
+     *
+     */
+    private String tolerantStrategy = TolerantStrategyKeys.FAIL_SAFE;
 
     /**
      * 注册中心配置

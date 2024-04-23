@@ -1,0 +1,4 @@
+failBack=org.xq.xqrpc.fault.tolerant.tolerantImpl.FailBackTolerantStrategy
+failFast=org.xq.xqrpc.fault.tolerant.tolerantImpl.FailFastTolerantStrategy
+failOver=org.xq.xqrpc.fault.tolerant.tolerantImpl.FailOverTolerantStrategy
+failSafe=org.xq.xqrpc.fault.tolerant.tolerantImpl.FailSafeTolerantStrategy
