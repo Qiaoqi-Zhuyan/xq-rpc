@@ -5,6 +5,7 @@ import io.vertx.core.Verticle;
 import io.vertx.core.impl.logging.LoggerFactory;
 import org.xq.common.model.User;
 import org.xq.common.service.UserService;
+import org.xq.xqrpc.bootstrap.ConsumerBootstrap;
 import org.xq.xqrpc.config.RpcServiceConfig;
 import org.xq.xqrpc.constant.RpcConstant;
 import org.xq.xqrpc.proxy.ServiceProxyFactory;
@@ -15,10 +16,12 @@ import org.xq.xqrpc.utils.ConfigUtils;
  */
 public class ConsumerExample {
     public static void main(String[] args){
-        for (int i = 0; i < 3; i++){
+        ConsumerBootstrap.init();
+
+        for (int i = 0; i < 5; i++){
             UserService userService = ServiceProxyFactory.getProxy(UserService.class);
             User user = userService.getUser(new User("xiaoqi user"));
-            System.out.println("[EasyConsumer]: "  + user);
+            System.out.println("[EasyConsumer]: "  + user + " " + (i + 1));
         }
     }
 }
