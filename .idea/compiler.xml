@@ -19,6 +19,7 @@
         <module name="xq-rpc-core" />
         <module name="xq-rpc-common" />
         <module name="xq-rpc-basic" />
+        <module name="xq-rpc-spring-boot-starter" />
       </profile>
     </annotationProcessing>
   </component>
