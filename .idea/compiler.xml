@@ -14,12 +14,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="xq-rpc-provider" />
-        <module name="xq-rpc-consumer" />
+        <module name="example-springboot-provider" />
         <module name="xq-rpc-core" />
-        <module name="xq-rpc-common" />
+        <module name="example-springboot-consumer" />
         <module name="xq-rpc-basic" />
         <module name="xq-rpc-spring-boot-starter" />
+        <module name="xq-rpc-provider" />
+        <module name="xq-rpc-consumer" />
+        <module name="xq-rpc-common" />
       </profile>
     </annotationProcessing>
   </component>

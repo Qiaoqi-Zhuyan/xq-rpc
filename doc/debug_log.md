@@ -44,3 +44,17 @@ header.setBodyLength(buffer.getInt(13));
 header.setBodyLength(Buffer.buffer().getInt(13));
 ```
 自动补全的时候一直按tab, 没有去检查这部分代码
+
+## 4.23
+使用注解驱动，无法对服务进行注入
+
+原因是在`RpcReference`中缺少注解
+```java
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.FIELD})
+```
+这里
+```java
+Retention(RetentionPolicy.Class)
+```
+这样子些是错误的, 对springboot-start注解理解不深

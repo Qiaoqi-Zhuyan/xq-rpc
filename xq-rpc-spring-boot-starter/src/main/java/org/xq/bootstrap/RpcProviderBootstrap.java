@@ -9,6 +9,7 @@ import org.xq.xqrpc.config.RegistryConfig;
 import org.xq.xqrpc.config.RpcServiceConfig;
 import org.xq.xqrpc.constant.RpcConstant;
 import org.xq.xqrpc.model.ServiceMetaInfo;
+import org.xq.xqrpc.registry.LocalRegistry;
 import org.xq.xqrpc.registry.Registry;
 import org.xq.xqrpc.registry.RegistryFactory;
 
@@ -28,7 +29,7 @@ public class RpcProviderBootstrap implements BeanPostProcessor {
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException{
         Class<?> beanClass = bean.getClass();
         RpcService rpcService = beanClass.getAnnotation(RpcService.class);
-        if (ObjectUtil.isNotNull(rpcService)){
+        if (rpcService != null){
             // 注册服务
             // 获得服务基本信息
             Class<?> interfaceClass = rpcService.interfaceClass();
@@ -38,8 +39,9 @@ public class RpcProviderBootstrap implements BeanPostProcessor {
             String serviceName = interfaceClass.getName();
             String serviceVersion = rpcService.serviceVersion();;
             // 注册本地服务
-            final RpcServiceConfig rpcServiceConfig = RpcApplication.getConfig();
+            LocalRegistry.register(serviceName, beanClass);
             // 注册服务中心
+            final RpcServiceConfig rpcServiceConfig = RpcApplication.getConfig();
             RegistryConfig registryConfig = rpcServiceConfig.getRegistryConfig();
             Registry registry = RegistryFactory.getInstance(registryConfig.getRegistry());
             ServiceMetaInfo serviceMetaInfo = new ServiceMetaInfo();

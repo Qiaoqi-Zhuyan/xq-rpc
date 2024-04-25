@@ -1,0 +1,9 @@
+rpc:
+    name: xq-rpc
+    version: 1.0
+    serverPort: 9090
+    serverHost: 127.0.0.1
+    serializer: protostuff
+#    registryConfig:
+#        registry: etcd
+#        address: localhost:2380

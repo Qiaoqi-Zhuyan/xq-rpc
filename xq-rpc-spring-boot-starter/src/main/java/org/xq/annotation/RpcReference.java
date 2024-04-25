@@ -5,11 +5,18 @@ import org.xq.xqrpc.fault.retry.RetryStrategyKeys;
 import org.xq.xqrpc.fault.tolerant.TolerantStrategyKeys;
 import org.xq.xqrpc.loadBalancer.LoadBalancerKeys;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 /**
  * 服务消费者注解 - 用于注入服务
  *
  * 需要指定调用服务相关属性, 服务接口类 , 可能存在多个接口, 版本号, 负载均衡器, 重试策略等
  */
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.FIELD})
 public @interface RpcReference {
 
     /**

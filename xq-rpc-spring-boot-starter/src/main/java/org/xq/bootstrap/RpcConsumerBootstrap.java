@@ -29,7 +29,7 @@ public class RpcConsumerBootstrap implements BeanPostProcessor {
         Field[] declareFields = beanClass.getDeclaredFields();
         for (Field field : declareFields){
             RpcReference rpcReference = field.getAnnotation(RpcReference.class);
-            if (ObjectUtil.isNotNull(rpcReference)){
+            if (rpcReference != null){
                 // 为属性生成代理对象
                 Class<?> interfaceClass = rpcReference.interfaceClass();
                 if (interfaceClass == void.class){
