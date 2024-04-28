@@ -1,4 +1,4 @@
-package org.xq.xqrpc.registry.EtcdRegistry;
+package org.xq.xqrpc.registry.registryImpl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ConcurrentHashSet;

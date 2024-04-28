@@ -1,4 +1,4 @@
-package org.xq.xqrpc.serializer.ProtostuffSerializer;
+package org.xq.xqrpc.serializer.SerializerImpl;
 
 import io.protostuff.LinkedBuffer;
 import io.protostuff.ProtostuffIOUtil;

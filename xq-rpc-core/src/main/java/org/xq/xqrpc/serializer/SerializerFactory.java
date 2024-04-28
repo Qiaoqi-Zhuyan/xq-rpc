@@ -1,6 +1,6 @@
 package org.xq.xqrpc.serializer;
 
-import org.xq.xqrpc.serializer.FastJsonSerializer.FastJsonSerializer;
+import org.xq.xqrpc.serializer.SerializerImpl.FastJsonSerializer;
 import org.xq.xqrpc.spi.SpiLoader;
 
 

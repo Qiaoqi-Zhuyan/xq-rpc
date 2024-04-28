@@ -1,4 +1,4 @@
-package org.xq.xqrpc.serializer.FastJsonSerializer;
+package org.xq.xqrpc.serializer.SerializerImpl;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONB;

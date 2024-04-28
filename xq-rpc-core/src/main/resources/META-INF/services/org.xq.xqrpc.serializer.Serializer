@@ -1,1 +1,1 @@
-org.xq.xqrpc.serializer.JdkSerializer.JdkSerializer
+org.xq.xqrpc.serializer.SerializerImpl.JdkSerializer

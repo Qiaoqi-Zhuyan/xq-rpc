@@ -1,4 +1,4 @@
-package org.xq.xqrpc.serializer.HessianSerializer;
+package org.xq.xqrpc.serializer.SerializerImpl;
 
 import com.caucho.hessian.io.HessianInput;
 import com.caucho.hessian.io.HessianOutput;

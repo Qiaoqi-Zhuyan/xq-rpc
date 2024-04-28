@@ -1,4 +1,4 @@
-package org.xq.xqrpc.registry.ZookeeperRegistry;
+package org.xq.xqrpc.registry.registryImpl;
 
 import cn.hutool.core.collection.ConcurrentHashSet;
 import lombok.extern.slf4j.Slf4j;
@@ -106,7 +106,7 @@ public class ZookeeperRegistry implements Registry {
     public List<ServiceMetaInfo> serviceDiscovery(String serviceKey) {
         List<ServiceMetaInfo> cachedServiceMetaInfoList = registryServiceCache.readCache();
         if (cachedServiceMetaInfoList != null){
-            logger.info("[EtcdRegistry]: read from cachedService");
+            logger.info("[zookeeperRegistry]: read from cachedService");
             return cachedServiceMetaInfoList;
         }
 

@@ -1,4 +1,4 @@
-package org.xq.xqrpc.serializer.JdkSerializer;
+package org.xq.xqrpc.serializer.SerializerImpl;
 
 import org.xq.xqrpc.serializer.Serializer;
 

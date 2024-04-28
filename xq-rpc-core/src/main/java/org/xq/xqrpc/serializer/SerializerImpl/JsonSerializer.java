@@ -1,4 +1,4 @@
-package org.xq.xqrpc.serializer.JsonSerializer;
+package org.xq.xqrpc.serializer.SerializerImpl;
 
 
 import org.xq.xqrpc.model.RpcRequest;

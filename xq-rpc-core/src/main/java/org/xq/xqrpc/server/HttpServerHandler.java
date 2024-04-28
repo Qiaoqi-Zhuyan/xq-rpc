@@ -8,8 +8,6 @@ import org.xq.xqrpc.RpcApplication;
 import org.xq.xqrpc.model.RpcRequest;
 import org.xq.xqrpc.model.RpcResponse;
 import org.xq.xqrpc.registry.LocalRegistry;
-import org.xq.xqrpc.serializer.FastJsonSerializer.FastJsonSerializer;
-import org.xq.xqrpc.serializer.JdkSerializer.JdkSerializer;
 import org.xq.xqrpc.serializer.Serializer;
 import org.xq.xqrpc.serializer.SerializerFactory;
 

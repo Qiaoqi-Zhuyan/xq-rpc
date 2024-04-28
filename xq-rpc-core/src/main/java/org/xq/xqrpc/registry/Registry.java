@@ -1,5 +1,6 @@
 package org.xq.xqrpc.registry;
 
+import com.alibaba.nacos.api.exception.NacosException;
 import org.xq.xqrpc.config.RegistryConfig;
 import org.xq.xqrpc.model.ServiceMetaInfo;
 
@@ -34,7 +35,7 @@ public interface Registry {
      * @param serviceKey
      * @return
      */
-    public List<ServiceMetaInfo> serviceDiscovery(String serviceKey);
+    public List<ServiceMetaInfo> serviceDiscovery(String serviceKey) throws NacosException;
 
     /**
      * 服务销毁

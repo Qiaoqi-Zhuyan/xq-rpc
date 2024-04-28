@@ -1,4 +1,4 @@
-package org.xq.xqrpc.serializer.KryoSerializer;
+package org.xq.xqrpc.serializer.SerializerImpl;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;

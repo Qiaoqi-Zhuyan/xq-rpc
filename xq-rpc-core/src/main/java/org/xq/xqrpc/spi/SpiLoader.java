@@ -4,7 +4,6 @@ import cn.hutool.core.io.resource.ResourceUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.xq.xqrpc.registry.EtcdRegistry.EtcdRegistry;
 import org.xq.xqrpc.serializer.Serializer;
 
 import java.io.BufferedReader;

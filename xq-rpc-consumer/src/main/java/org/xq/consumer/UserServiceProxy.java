@@ -6,7 +6,7 @@ import org.xq.common.model.User;
 import org.xq.common.service.UserService;
 import org.xq.xqrpc.model.RpcRequest;
 import org.xq.xqrpc.model.RpcResponse;
-import org.xq.xqrpc.serializer.JdkSerializer.JdkSerializer;
+import org.xq.xqrpc.serializer.SerializerImpl.JdkSerializer;
 import org.xq.xqrpc.serializer.Serializer;
 
 import java.io.IOException;

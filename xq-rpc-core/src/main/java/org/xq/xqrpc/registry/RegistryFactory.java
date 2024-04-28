@@ -1,8 +1,6 @@
 package org.xq.xqrpc.registry;
 
-import org.checkerframework.checker.units.qual.K;
-import org.xq.xqrpc.registry.EtcdRegistry.EtcdRegistry;
-import org.xq.xqrpc.serializer.Serializer;
+import org.xq.xqrpc.registry.registryImpl.EtcdRegistry;
 import org.xq.xqrpc.spi.SpiLoader;
 
 /**
